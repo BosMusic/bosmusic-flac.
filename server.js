@@ -69,7 +69,7 @@ http.createServer(async (req, res) => {
       return send(res, 200, {
         ok: true,
         configured: !!CLIENT_ID,
-        version: '0.2.0'
+        version: '0.3.0'
       });
     }
 
@@ -159,5 +159,5 @@ if (!t?.audio) {
     });
   }
 }).listen(PORT, '0.0.0.0', () => {
-  console.log('BosMusic v0.2.0 running on ' + PORT);
+  console.log('BosMusic v0.3.0 running on ' + PORT);
 });
