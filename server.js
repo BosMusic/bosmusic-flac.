@@ -124,11 +124,18 @@ http.createServer(async (req, res) => {
 
       const t = results[0];
 
-      if (!t?.audio) {
-        return send(res, 404, {
-          error: 'Playable track not found'
-        });
-      }
+      
+if (!t?.audio) {
+  return send(res, 404, {
+    error: 'Playable track not found',
+    requestedId: id,
+    resultsCount: results.length,
+    returnedId: t?.id ?? null,
+    hasAudio: !!t?.audio,
+    hasDownload: !!t?.audiodownload
+  });
+}
+
 
       return send(res, 200, {
         url: t.audio,
