@@ -1,9 +1,10 @@
- 
+
 import http from 'node:http';
 
 const PORT = Number(process.env.PORT || 3000);
 const CLIENT_ID = process.env.JAMENDO_CLIENT_ID;
 const BASE = 'https://api.jamendo.com/v3.0';
+const VERSION = '0.3.0';
 
 function send(res, status, data) {
   res.writeHead(status, {
@@ -52,8 +53,8 @@ async function jamendo(params) {
 const manifest = {
   id: 'org.bosmusic.jamendo',
   name: 'BosMusic Jamendo',
-  version: '0.3.0',
-  description: 'Jamendo music streaming for BitChord',
+  version: VERSION,
+  description: 'Jamendo MP3 streaming for BitChord',
   resources: ['search', 'stream'],
   types: ['track'],
   catalogs: [],
@@ -69,12 +70,14 @@ http.createServer(async (req, res) => {
       return send(res, 200, {
         ok: true,
         configured: !!CLIENT_ID,
-        version: '0.3.0'
+        version: VERSION
       });
     }
 
-    if (u.pathname === '/' ||
-        u.pathname === '/manifest.json') {
+    if (
+      u.pathname === '/' ||
+      u.pathname === '/manifest.json'
+    ) {
       return send(res, 200, manifest);
     }
 
@@ -124,18 +127,16 @@ http.createServer(async (req, res) => {
 
       const t = results[0];
 
-      
-if (!t?.audio) {
-  return send(res, 404, {
-    error: 'Playable track not found',
-    requestedId: id,
-    resultsCount: results.length,
-    returnedId: t?.id ?? null,
-    hasAudio: !!t?.audio,
-    hasDownload: !!t?.audiodownload
-  });
-}
-
+      if (!t?.audio) {
+        return send(res, 404, {
+          error: 'Playable track not found',
+          requestedId: id,
+          resultsCount: results.length,
+          returnedId: t?.id ?? null,
+          hasAudio: !!t?.audio,
+          hasDownload: !!t?.audiodownload
+        });
+      }
 
       return send(res, 200, {
         url: t.audio,
@@ -159,5 +160,5 @@ if (!t?.audio) {
     });
   }
 }).listen(PORT, '0.0.0.0', () => {
-  console.log('BosMusic v0.3.0 running on ' + PORT);
+  console.log('BosMusic v' + VERSION + ' running on ' + PORT);
 });
