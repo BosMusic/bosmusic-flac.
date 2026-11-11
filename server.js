@@ -52,7 +52,7 @@ async function jamendo(params) {
 const manifest = {
   id: 'org.bosmusic.jamendo',
   name: 'BosMusic Jamendo',
-  version: '0.2.0',
+  version: '0.3.0',
   description: 'Jamendo music streaming for BitChord',
   resources: ['search', 'stream'],
   types: ['track'],
