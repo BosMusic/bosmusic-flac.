@@ -58,7 +58,7 @@ const manifest = {
   types: ['track'],
   catalogs: [],
   allowDownloads: 0,
-  checkValidLossless: 1
+  checkValidLossless: 0
 };
 
 http.createServer(async (req, res) => {
